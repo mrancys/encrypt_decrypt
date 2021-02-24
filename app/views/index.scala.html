@@ -1,5 +1,23 @@
 @()
 
-@main("Welcome to Play") {
-  <h1>Welcome to Play!</h1>
+@main("Encrypt Decrypt") {
+    <form method="POST" url="/encrypt" id="form1">
+        <label for="unecryptedtext">Text to encrypt with signature: </label><br/>
+        <input type="text" id="unecryptedtext" name="unecryptedtext"><br/>
+        <input type="submit"><br/>
+    </form>
+    <div>
+        <span id="encrypted_text"></span>
+        <span id="signature_match"></span>
+    </div>
+
+    <form method="POST" url="/decrypt" id="form2">
+        <label for="decryptedtext">Text to decrypt with signature: </label><br/>
+        <input type="text" id="decryptedtext" name="deecryptedtext"><br/>
+        <input type="submit"><br/>
+    </form>
+    <div>
+        <span id="decrypted_text"></span>
+        <span id="decrypted_signature_match"></span>
+    </div>
 }
