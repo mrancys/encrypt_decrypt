@@ -18,4 +18,12 @@ public class HomeController extends Controller {
         return ok(views.html.index.render());
     }
 
+    public Result encrypt(Http.Request request) {
+        System.out.println(request.body());
+        return ok(views.html.index.render());
+    }
+
+    public Result decrypt() {
+        return ok(views.html.index.render());
+    }
 }
