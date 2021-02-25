@@ -25,21 +25,35 @@
             var encrpyt_form = document.getElementById('form1');
             encrpyt_form.addEventListener("submit", encrypt, false);
 
-            var decrypted_form = document.getElementById('form1');
+            var decrypted_form = document.getElementById('form2');
             decrypted_form.addEventListener("submit", decrypt, false);
         }
 
         function encrypt(event) {
             event.preventDefault();
 
-            var value = document.getElementById('unecryptedtext').value;
-            var request = new XMLHttpRequest();
-            request.open("POST", "/encrypt", true);
-            request.onreadystatechange = function () {
-                if (request.readyState != 4 || request.status != 200) return;
-                alert("Success: " + request.responseText);
-            };
-            request.send(`unencrypted=${value}`);
+            let unencrypted_value = document.getElementById('unecryptedtext').value;
+            fetch('/encrypt', {
+                method: 'POST',
+                body: JSON.stringify({
+                    unencrypted: unencrypted_value
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8'
+                }
+            }).then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                }
+                return Promise.reject(response);
+            }).then(function (data) {
+                if (data.encrypted)
+                {
+                    document.getElementById('encrypted_text').textContent = data.encrypted;
+                }
+            }).catch(function (error) {
+                console.warn('Something went wrong.', error);
+            });
         }
 
         function decrypt(event) {
